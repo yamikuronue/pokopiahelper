@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#8ecae6" />
+    <meta
+      name="description"
+      content="Pokopia Companion — phone-friendly food flavors, Mosslax buffs, and fossil checklist."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    />
+    <title>Pokopia Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%238ecae6'/%3E%3Cellipse cx='32' cy='38' rx='18' ry='14' fill='%232d6a4f'/%3E%3Ccircle cx='24' cy='34' r='3' fill='%23fff8f0'/%3E%3Ccircle cx='40' cy='34' r='3' fill='%23fff8f0'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <header class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffe8a3" />
+                <stop offset="100%" stop-color="#8ecae6" />
+              </linearGradient>
+            </defs>
+            <circle cx="32" cy="32" r="30" fill="url(#sky)" />
+            <ellipse cx="32" cy="40" rx="20" ry="15" fill="#2d6a4f" />
+            <ellipse cx="32" cy="28" rx="14" ry="12" fill="#52b788" />
+            <circle cx="26" cy="26" r="3.2" fill="#fff8f0" />
+            <circle cx="38" cy="26" r="3.2" fill="#fff8f0" />
+            <circle cx="26.5" cy="26.5" r="1.2" fill="#1d3557" />
+            <circle cx="38.5" cy="26.5" r="1.2" fill="#1d3557" />
+            <path
+              d="M28 33c2 2 6 2 8 0"
+              stroke="#1d3557"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <circle cx="48" cy="14" r="5" fill="#ffd166" />
+          </svg>
+        </div>
+        <h1>Pokopia Companion</h1>
+        <p>Flavors, Mosslax buffs &amp; museum fossils</p>
+      </header>
+
+      <main>
+        <section id="panel-foods" class="panel is-active" aria-label="Foods by flavor">
+          <div class="hint-card">
+            <h2>Quick lookup</h2>
+            <p>
+              Tap a flavor to see matching foods. Mosslax’s daily Eat buff follows the flavor you
+              offer — cooked meals usually give a stronger effect than raw ingredients.
+            </p>
+          </div>
+
+          <div id="flavor-chips" class="flavor-chips" role="tablist" aria-label="Flavors"></div>
+          <div id="flavor-banner" class="flavor-banner" aria-live="polite"></div>
+          <ul id="food-list" class="food-list"></ul>
+        </section>
+
+        <section id="panel-fossils" class="panel" aria-label="Fossil checklist">
+          <div class="hint-card">
+            <h2>Museum checklist</h2>
+            <p>
+              Check off each fossil piece as you find it. Progress saves on this phone only
+              (localStorage) — export a backup if you switch devices.
+            </p>
+          </div>
+
+          <div class="fossil-progress">
+            <div class="row">
+              <strong id="progress-label">0 / 22 fossils</strong>
+              <span>Saved here</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            <div class="fossil-actions">
+              <button type="button" class="btn" id="btn-export">Export</button>
+              <button type="button" class="btn" id="btn-import">Import</button>
+              <button type="button" class="btn btn-danger" id="btn-reset">Reset</button>
+              <input id="import-file" type="file" accept="application/json,.json" hidden />
+            </div>
+          </div>
+
+          <div id="fossil-sets"></div>
+        </section>
+      </main>
+
+      <p class="credit">
+        Fan companion for personal use. Pokopia &amp; Pokémon © Nintendo / The Pokémon Company /
+        Game Freak. Not affiliated.
+      </p>
+    </div>
+
+    <nav class="tab-bar" aria-label="Primary">
+      <button type="button" class="tab is-active" data-tab="foods">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M12 3c4 4 7 7 7 11a7 7 0 1 1-14 0c0-4 3-7 7-11z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Foods
+      </button>
+      <button type="button" class="tab" data-tab="fossils">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M7 8a2.5 2.5 0 1 1 2.5-2.5A2.5 2.5 0 0 1 7 8zm10 0a2.5 2.5 0 1 1 2.5-2.5A2.5 2.5 0 0 1 17 8zM8 7h8v2H8zm-1 8a2.5 2.5 0 1 1 2.5 2.5A2.5 2.5 0 0 1 7 15zm10 0a2.5 2.5 0 1 1 2.5 2.5A2.5 2.5 0 0 1 17 15zM8 16h8v-2H8z"
+            fill="currentColor"
+          />
+        </svg>
+        Fossils
+      </button>
+    </nav>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

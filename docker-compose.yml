@@ -1,0 +1,12 @@
+services:
+  pokopia-companion:
+    build: .
+    image: pokopia-companion:local
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
