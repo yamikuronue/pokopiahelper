@@ -425,6 +425,94 @@ body::before {
   opacity: 1;
 }
 
+.island-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.island-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: pop-in 0.35s ease-out both;
+}
+
+.island-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 0.95rem;
+  background: linear-gradient(90deg, rgba(142, 202, 230, 0.45), transparent);
+  border-bottom: 1px solid rgba(29, 53, 87, 0.06);
+}
+
+.island-card-header svg {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.island-card-header h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+}
+
+.island-card-header p {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.island-section {
+  padding: 0.75rem 0.95rem;
+}
+
+.island-section + .island-section {
+  border-top: 1px solid rgba(29, 53, 87, 0.06);
+}
+
+.island-section h4 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--leaf);
+}
+
+.material-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.92rem;
+}
+
+.legendary-section.has-legendary {
+  background: rgba(255, 209, 102, 0.22);
+}
+
+.legendary-section.no-legendary {
+  background: rgba(69, 123, 157, 0.08);
+}
+
+.legendary-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--leaf-deep);
+}
+
+.legendary-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
 .tab-bar {
   position: fixed;
   left: 50%;
@@ -432,9 +520,9 @@ body::before {
   transform: translateX(-50%);
   width: min(480px, 100%);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.35rem;
-  padding: 0.55rem 0.75rem calc(0.55rem + var(--safe-bottom));
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.55rem 0.55rem calc(0.55rem + var(--safe-bottom));
   background: rgba(255, 248, 240, 0.94);
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(29, 53, 87, 0.08);
@@ -448,13 +536,13 @@ body::before {
   border-radius: 14px;
   background: transparent;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 600;
   color: var(--ink-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
   cursor: pointer;
 }
 
