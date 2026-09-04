@@ -4,8 +4,9 @@ Phone-friendly static helper for **Pokopia**: look up foods by flavor (with Moss
 
 ## Features
 
-- **Foods** — filter by Neutral / Sweet / Spicy / Dry / Bitter / Sour, with Mosslax buff notes
+- **Foods** — filter by Neutral / Sweet / Spicy / Dry / Bitter / Sour, with Mosslax buff notes on each flavor
 - **Fossils** — checklist for all 22 pieces across 9 displays; autosaves on this device
+- **Islands** — Dream Island dolls with materials and legendary chances
 - **Export / Import** — JSON backup of fossil progress
 - **Custom icons** — no ripped game art
 - **Docker** — nginx Alpine image for one-command deploy

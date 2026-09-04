@@ -8,12 +8,14 @@
     panels: {
       foods: document.getElementById("panel-foods"),
       fossils: document.getElementById("panel-fossils"),
+      islands: document.getElementById("panel-islands"),
     },
     tabs: [...document.querySelectorAll("[data-tab]")],
     chips: document.getElementById("flavor-chips"),
     flavorBanner: document.getElementById("flavor-banner"),
     foodList: document.getElementById("food-list"),
     fossilSets: document.getElementById("fossil-sets"),
+    islandList: document.getElementById("island-list"),
     progressLabel: document.getElementById("progress-label"),
     progressFill: document.getElementById("progress-fill"),
     exportBtn: document.getElementById("btn-export"),
@@ -85,6 +87,10 @@
 
   function iconBone() {
     return `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 14a4 4 0 1 1 4-4 4 4 0 1 1-4 4zm16 0a4 4 0 1 1 4-4 4 4 0 1 1-4 4zM14 12h12v4H14zm-2 14a4 4 0 1 1 4 4 4 4 0 1 1-4-4zm16 0a4 4 0 1 1 4 4 4 4 0 1 1-4-4zM14 28h12v-4H14z" fill="#c4a574"/><circle cx="20" cy="20" r="3" fill="#8a6a3d"/></svg>`;
+  }
+
+  function iconDoll() {
+    return `<svg viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="20" cy="28" rx="11" ry="8" fill="#e89bb8"/><circle cx="20" cy="15" r="9" fill="#ffd166"/><circle cx="17" cy="14" r="1.6" fill="#1d3557"/><circle cx="23" cy="14" r="1.6" fill="#1d3557"/><path d="M17 18c1.5 1.5 4.5 1.5 6 0" stroke="#1d3557" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M12 10c2-3 5-4 8-3" stroke="#2d6a4f" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
   }
 
   function checkMark() {
@@ -186,6 +192,40 @@
       .join("");
   }
 
+  function renderIslands() {
+    const islands = data.dreamIslands || [];
+    els.islandList.innerHTML = islands
+      .map((island, index) => {
+        const legendaryLabel = island.legendary
+          ? escapeHtml(island.legendary)
+          : "None confirmed";
+        const legendaryClass = island.legendary ? "has-legendary" : "no-legendary";
+        const materials = island.materials
+          .map((item) => `<li>${escapeHtml(item)}</li>`)
+          .join("");
+        return `
+        <article class="island-card" style="animation-delay:${Math.min(index, 8) * 0.04}s">
+          <div class="island-card-header">
+            ${iconDoll()}
+            <div>
+              <h3>${escapeHtml(island.doll)}</h3>
+              <p>${escapeHtml(island.island)} · ${escapeHtml(island.biome)}</p>
+            </div>
+          </div>
+          <div class="island-section">
+            <h4>Materials</h4>
+            <ul class="material-list">${materials}</ul>
+          </div>
+          <div class="island-section legendary-section ${legendaryClass}">
+            <h4>Legendary</h4>
+            <p class="legendary-name">${legendaryLabel}</p>
+            <p class="legendary-note">${escapeHtml(island.legendaryNote || "")}</p>
+          </div>
+        </article>`;
+      })
+      .join("");
+  }
+
   function togglePiece(id) {
     if (collected[id]) delete collected[id];
     else collected[id] = true;
@@ -262,8 +302,10 @@
   els.resetBtn.addEventListener("click", resetProgress);
 
   const hash = (location.hash || "").replace("#", "");
-  setTab(hash === "fossils" ? "fossils" : "foods");
+  const initialTab = ["foods", "fossils", "islands"].includes(hash) ? hash : "foods";
+  setTab(initialTab);
   renderChips();
   renderFoods();
   renderFossils();
+  renderIslands();
 })();

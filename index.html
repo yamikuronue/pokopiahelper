@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#8ecae6" />
     <meta
       name="description"
-      content="Pokopia Companion — phone-friendly food flavors, Mosslax buffs, and fossil checklist."
+      content="Pokopia Companion — food flavors, Mosslax buffs, fossils, and Dream Island dolls."
     />
     <meta
       http-equiv="Content-Security-Policy"
@@ -54,7 +54,7 @@
           </svg>
         </div>
         <h1>Pokopia Companion</h1>
-        <p>Flavors, Mosslax buffs &amp; museum fossils</p>
+        <p>Flavors, fossils &amp; Dream Island dolls</p>
       </header>
 
       <main>
@@ -99,6 +99,17 @@
 
           <div id="fossil-sets"></div>
         </section>
+
+        <section id="panel-islands" class="panel" aria-label="Dream Islands">
+          <div class="hint-card">
+            <h2>Dream Islands</h2>
+            <p>
+              Show a doll to Drifloon for a daily trip. Each doll picks an island’s materials — and
+              sometimes a legendary hiding in the caves (not guaranteed).
+            </p>
+          </div>
+          <div id="island-list" class="island-list"></div>
+        </section>
       </main>
 
       <p class="credit">
@@ -127,6 +138,24 @@
           />
         </svg>
         Fossils
+      </button>
+      <button type="button" class="tab" data-tab="islands">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M4 16c2-3 4-4 8-4s6 1 8 4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <circle cx="12" cy="9" r="3.5" stroke="currentColor" stroke-width="2" />
+          <path
+            d="M3 19h18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        Islands
       </button>
     </nav>
 
