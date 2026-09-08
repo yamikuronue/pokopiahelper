@@ -4,7 +4,7 @@ Phone-friendly static helper for **Pokopia**: look up foods by flavor (with Moss
 
 ## Features
 
-- **Foods** — filter by Neutral / Sweet / Spicy / Dry / Bitter / Sour, with Mosslax buff notes on each flavor
+- **Foods** — filter by flavor, tap a food for its recipe (ingredients + required specialty Pokémon)
 - **Fossils** — checklist for all 22 pieces across 9 displays; autosaves on this device
 - **Islands** — Dream Island dolls with materials and legendary chances
 - **Export / Import** — JSON backup of fossil progress
