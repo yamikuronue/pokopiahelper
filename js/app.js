@@ -2,6 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "pokopia-companion:v1";
+  const DLC_KEY = "pokopia-companion:show-dlc";
   const data = window.POKOPIA_DATA;
 
   const els = {
@@ -22,11 +23,31 @@
     importBtn: document.getElementById("btn-import"),
     importFile: document.getElementById("import-file"),
     resetBtn: document.getElementById("btn-reset"),
+    dlcToggle: document.getElementById("toggle-dlc"),
   };
 
   let activeFlavor = data.flavors[0].id;
   let collected = loadCollected();
   let openFoodId = null;
+  let showDlc = loadShowDlc();
+
+  function loadShowDlc() {
+    try {
+      const raw = localStorage.getItem(DLC_KEY);
+      if (raw === null) return true;
+      return raw === "1" || raw === "true";
+    } catch {
+      return true;
+    }
+  }
+
+  function saveShowDlc() {
+    localStorage.setItem(DLC_KEY, showDlc ? "1" : "0");
+  }
+
+  function includeItem(item) {
+    return showDlc || !item.dlc;
+  }
 
   function loadCollected() {
     try {
@@ -133,16 +154,20 @@
         <p>${escapeHtml(flavor.mosslax)}</p>
       </div>`;
 
-    const foods = data.foods.filter((food) => food.flavor === activeFlavor);
+    const foods = data.foods.filter((food) => food.flavor === activeFlavor && includeItem(food));
+    if (openFoodId && !foods.some((food) => food.id === openFoodId)) {
+      openFoodId = null;
+    }
     els.foodList.innerHTML = foods
       .map((food, index) => {
         const open = openFoodId === food.id;
+        const dlcBadge = food.dlc ? `<span class="dlc-badge">DLC</span>` : "";
         return `
       <li class="food-item${open ? " is-open" : ""}" style="--flavor-accent:${flavor.color};animation-delay:${Math.min(index, 8) * 0.03}s">
         <button type="button" class="food-item-toggle" data-food="${escapeHtml(food.id)}" aria-expanded="${open}">
           ${iconFood(food.kind)}
           <div class="food-item-main">
-            <strong>${escapeHtml(food.name)}</strong>
+            <strong>${escapeHtml(food.name)}${dlcBadge}</strong>
             <span class="note">${escapeHtml(food.note)}</span>
             <span class="kind-tag">${escapeHtml(food.kind)}</span>
           </div>
@@ -250,7 +275,7 @@
   }
 
   function renderIslands() {
-    const islands = data.dreamIslands || [];
+    const islands = (data.dreamIslands || []).filter(includeItem);
     els.islandList.innerHTML = islands
       .map((island, index) => {
         const legendaryLabel = island.legendary
@@ -260,12 +285,13 @@
         const materials = island.materials
           .map((item) => `<li>${escapeHtml(item)}</li>`)
           .join("");
+        const dlcBadge = island.dlc ? `<span class="dlc-badge">DLC</span>` : "";
         return `
         <article class="island-card" style="animation-delay:${Math.min(index, 8) * 0.04}s">
           <div class="island-card-header">
             ${iconDoll()}
             <div>
-              <h3>${escapeHtml(island.doll)}</h3>
+              <h3>${escapeHtml(island.doll)}${dlcBadge}</h3>
               <p>${escapeHtml(island.island)} · ${escapeHtml(island.biome)}</p>
             </div>
           </div>
@@ -366,6 +392,16 @@
     els.importFile.value = "";
   });
   els.resetBtn.addEventListener("click", resetProgress);
+
+  if (els.dlcToggle) {
+    els.dlcToggle.checked = showDlc;
+    els.dlcToggle.addEventListener("change", () => {
+      showDlc = els.dlcToggle.checked;
+      saveShowDlc();
+      renderFoods();
+      renderIslands();
+    });
+  }
 
   const hash = (location.hash || "").replace("#", "");
   const initialTab = ["foods", "fossils", "islands"].includes(hash) ? hash : "foods";

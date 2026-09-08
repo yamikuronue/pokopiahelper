@@ -119,7 +119,7 @@ window.POKOPIA_DATA = {
     { id: "moomoo-coffee", name: "Moomoo Milk Coffee", flavor: "sweet", kind: "Drink", note: "Shop / vending", recipe: null },
     { id: "common-candy", name: "Common Candy", flavor: "sweet", kind: "Other", note: "From Chef Dente", recipe: null },
     { id: "rare-candy", name: "Rare Candy", flavor: "sweet", kind: "Other", note: "From Chef Dente", recipe: null },
-    { id: "watermelon-slice", name: "Watermelon Slice", flavor: "sweet", kind: "Veggie", note: "DLC / special harvest", recipe: null },
+    { id: "watermelon-slice", name: "Watermelon Slice", flavor: "sweet", kind: "Veggie", note: "DLC / special harvest", recipe: null, dlc: true },
     {
       id: "leppa-salad",
       name: "Leppa Salad",
@@ -142,6 +142,7 @@ window.POKOPIA_DATA = {
       flavor: "sweet",
       kind: "Cooked",
       note: "Watermelon bread",
+      dlc: true,
       recipe: { station: "Bread Oven", ingredients: ["Wheat ×1", "Watermelon Slice ×1"], specialty: null, tip: "Bubbly Basin DLC." },
     },
     {
@@ -158,6 +159,7 @@ window.POKOPIA_DATA = {
       flavor: "sweet",
       kind: "Drink",
       note: "Powers up Surf",
+      dlc: true,
       recipe: { station: "Blender", ingredients: ["Watermelon Slice ×1", "Leppa Berry ×1", "Any ×1"], specialty: null, tip: "Bubbly Basin DLC — unlock blender via Mudkip." },
     },
     {
@@ -166,6 +168,7 @@ window.POKOPIA_DATA = {
       flavor: "sweet",
       kind: "Drink",
       note: "Powers up Surf",
+      dlc: true,
       recipe: { station: "Blender", ingredients: ["Watermelon Slice ×1", "Any ×2"], specialty: null, tip: "Bubbly Basin DLC — unlock blender via Mudkip." },
     },
 
@@ -218,7 +221,8 @@ window.POKOPIA_DATA = {
       flavor: "spicy",
       kind: "Cooked",
       note: "Very spicy hamburger",
-      recipe: { station: "Frying Pan (on Stove)", ingredients: ["Bean ×1", "Sea Grapes ×1", "Chili Sauce ×1"], specialty: "Explode" },
+      dlc: true,
+      recipe: { station: "Frying Pan (on Stove)", ingredients: ["Bean ×1", "Sea Grapes ×1", "Chili Sauce ×1"], specialty: "Explode", tip: "Uses Sea Grapes (Bubbly Basin DLC)." },
     },
     {
       id: "red-hot-smoothie",
@@ -226,6 +230,7 @@ window.POKOPIA_DATA = {
       flavor: "spicy",
       kind: "Drink",
       note: "Powers up Surf",
+      dlc: true,
       recipe: { station: "Blender", ingredients: ["Watermelon Slice ×1", "Fresh Carrot ×1", "Any ×1"], specialty: "Burn", tip: "Bubbly Basin DLC." },
     },
 
@@ -264,6 +269,7 @@ window.POKOPIA_DATA = {
       flavor: "dry",
       kind: "Drink",
       note: "Powers up Surf",
+      dlc: true,
       recipe: { station: "Blender", ingredients: ["Watermelon Slice ×1", "Sea Grapes ×1", "Any ×1"], specialty: null, tip: "Bubbly Basin DLC." },
     },
 
@@ -271,7 +277,7 @@ window.POKOPIA_DATA = {
     { id: "rawst-berry", name: "Rawst Berry", flavor: "bitter", kind: "Berry", note: "Berry trees", recipe: null },
     { id: "potato", name: "Potato", flavor: "bitter", kind: "Veggie", note: "Plant & harvest", recipe: null },
     { id: "seaweed", name: "Seaweed", flavor: "bitter", kind: "Veggie", note: "Washed ashore on beaches", recipe: null },
-    { id: "sea-grapes", name: "Sea Grapes", flavor: "bitter", kind: "Veggie", note: "Ocean / DLC", recipe: null },
+    { id: "sea-grapes", name: "Sea Grapes", flavor: "bitter", kind: "Veggie", note: "Ocean / DLC", recipe: null, dlc: true },
     {
       id: "seaweed-salad",
       name: "Seaweed Salad",
@@ -286,6 +292,7 @@ window.POKOPIA_DATA = {
       flavor: "bitter",
       kind: "Cooked",
       note: "Made with sea grapes",
+      dlc: true,
       recipe: { station: "Chopping Board", ingredients: ["Leaf ×1", "Sea Grapes ×1"], specialty: null, tip: "Bubbly Basin DLC." },
     },
     {
@@ -302,6 +309,7 @@ window.POKOPIA_DATA = {
       flavor: "bitter",
       kind: "Cooked",
       note: "Smells of the sea",
+      dlc: true,
       recipe: { station: "Cooking Pot (on Stove)", ingredients: ["Fresh Water ×1", "Sea Grapes ×1"], specialty: null, tip: "Bubbly Basin DLC." },
     },
     {
@@ -326,6 +334,7 @@ window.POKOPIA_DATA = {
       flavor: "bitter",
       kind: "Drink",
       note: "Powers up Surf",
+      dlc: true,
       recipe: { station: "Blender", ingredients: ["Watermelon Slice ×1", "Moomoo Milk Coffee ×1", "Bread ×1 (any)"], specialty: null, tip: "Bubbly Basin DLC." },
     },
 
@@ -371,6 +380,7 @@ window.POKOPIA_DATA = {
       flavor: "sour",
       kind: "Drink",
       note: "Powers up Surf",
+      dlc: true,
       recipe: { station: "Blender", ingredients: ["Watermelon Slice ×1", "Aspear Berry ×1", "Soda Pop ×1"], specialty: null, tip: "Bubbly Basin DLC." },
     },
   ],
@@ -514,6 +524,7 @@ window.POKOPIA_DATA = {
       materials: ["Sea Grapes", "Small Coral", "Grubby Pearl"],
       legendary: "Phione",
       legendaryNote: "Underwater ruins — chance spawn.",
+      dlc: true,
     },
     {
       id: "ditto",
