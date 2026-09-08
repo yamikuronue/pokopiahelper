@@ -2,6 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "pokopia-companion:v1";
+  const DLC_KEY = "pokopia-companion:show-dlc";
   const data = window.POKOPIA_DATA;
 
   const els = {
@@ -22,10 +23,31 @@
     importBtn: document.getElementById("btn-import"),
     importFile: document.getElementById("import-file"),
     resetBtn: document.getElementById("btn-reset"),
+    dlcToggle: document.getElementById("toggle-dlc"),
   };
 
   let activeFlavor = data.flavors[0].id;
   let collected = loadCollected();
+  let openFoodId = null;
+  let showDlc = loadShowDlc();
+
+  function loadShowDlc() {
+    try {
+      const raw = localStorage.getItem(DLC_KEY);
+      if (raw === null) return true;
+      return raw === "1" || raw === "true";
+    } catch {
+      return true;
+    }
+  }
+
+  function saveShowDlc() {
+    localStorage.setItem(DLC_KEY, showDlc ? "1" : "0");
+  }
+
+  function includeItem(item) {
+    return showDlc || !item.dlc;
+  }
 
   function loadCollected() {
     try {
@@ -132,20 +154,80 @@
         <p>${escapeHtml(flavor.mosslax)}</p>
       </div>`;
 
-    const foods = data.foods.filter((food) => food.flavor === activeFlavor);
+    const foods = data.foods.filter((food) => food.flavor === activeFlavor && includeItem(food));
+    if (openFoodId && !foods.some((food) => food.id === openFoodId)) {
+      openFoodId = null;
+    }
     els.foodList.innerHTML = foods
-      .map(
-        (food, index) => `
-      <li class="food-item" style="--flavor-accent:${flavor.color};animation-delay:${Math.min(index, 8) * 0.03}s">
-        ${iconFood(food.kind)}
-        <div>
-          <strong>${escapeHtml(food.name)}</strong>
-          <span class="note">${escapeHtml(food.note)}</span>
-          <span class="kind-tag">${escapeHtml(food.kind)}</span>
+      .map((food, index) => {
+        const open = openFoodId === food.id;
+        const dlcBadge = food.dlc ? `<span class="dlc-badge">DLC</span>` : "";
+        return `
+      <li class="food-item${open ? " is-open" : ""}" style="--flavor-accent:${flavor.color};animation-delay:${Math.min(index, 8) * 0.03}s">
+        <button type="button" class="food-item-toggle" data-food="${escapeHtml(food.id)}" aria-expanded="${open}">
+          ${iconFood(food.kind)}
+          <div class="food-item-main">
+            <strong>${escapeHtml(food.name)}${dlcBadge}</strong>
+            <span class="note">${escapeHtml(food.note)}</span>
+            <span class="kind-tag">${escapeHtml(food.kind)}</span>
+          </div>
+          <span class="food-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="food-recipe" ${open ? "" : "hidden"}>
+          ${renderRecipe(food)}
         </div>
-      </li>`
-      )
+      </li>`;
+      })
       .join("");
+  }
+
+  function renderRecipe(food) {
+    if (!food.recipe) {
+      return `<p class="recipe-empty">Not cooked — find, harvest, buy, or receive this item as-is.</p>`;
+    }
+
+    const recipe = food.recipe;
+    const helpers = recipe.specialty
+      ? (data.specialtyHelpers && data.specialtyHelpers[recipe.specialty]) || []
+      : [];
+    const ingredients = (recipe.ingredients || [])
+      .map((item) => `<li>${escapeHtml(item)}</li>`)
+      .join("");
+
+    let specialtyBlock = "";
+    if (recipe.specialty) {
+      const helperText = helpers.length
+        ? `Example Pokémon: ${helpers.map((name) => escapeHtml(name)).join(", ")}`
+        : "Bring a partner with this specialty near the station.";
+      specialtyBlock = `
+        <div class="recipe-block specialty-needed">
+          <h4>Required specialty</h4>
+          <p class="specialty-name">${escapeHtml(recipe.specialty)}</p>
+          <p class="specialty-helpers">${helperText}</p>
+        </div>`;
+    } else {
+      specialtyBlock = `
+        <div class="recipe-block">
+          <h4>Required specialty</h4>
+          <p>None — cook with ingredients only.</p>
+        </div>`;
+    }
+
+    const tip = recipe.tip
+      ? `<p class="recipe-tip">${escapeHtml(recipe.tip)}</p>`
+      : "";
+
+    return `
+      <div class="recipe-block">
+        <h4>Station</h4>
+        <p>${escapeHtml(recipe.station)}</p>
+      </div>
+      <div class="recipe-block">
+        <h4>Ingredients</h4>
+        <ul class="recipe-ingredients">${ingredients}</ul>
+      </div>
+      ${specialtyBlock}
+      ${tip}`;
   }
 
   function setCount(set) {
@@ -193,7 +275,7 @@
   }
 
   function renderIslands() {
-    const islands = data.dreamIslands || [];
+    const islands = (data.dreamIslands || []).filter(includeItem);
     els.islandList.innerHTML = islands
       .map((island, index) => {
         const legendaryLabel = island.legendary
@@ -203,12 +285,13 @@
         const materials = island.materials
           .map((item) => `<li>${escapeHtml(item)}</li>`)
           .join("");
+        const dlcBadge = island.dlc ? `<span class="dlc-badge">DLC</span>` : "";
         return `
         <article class="island-card" style="animation-delay:${Math.min(index, 8) * 0.04}s">
           <div class="island-card-header">
             ${iconDoll()}
             <div>
-              <h3>${escapeHtml(island.doll)}</h3>
+              <h3>${escapeHtml(island.doll)}${dlcBadge}</h3>
               <p>${escapeHtml(island.island)} · ${escapeHtml(island.biome)}</p>
             </div>
           </div>
@@ -282,7 +365,16 @@
     const button = event.target.closest("[data-flavor]");
     if (!button) return;
     activeFlavor = button.dataset.flavor;
+    openFoodId = null;
     renderChips();
+    renderFoods();
+  });
+
+  els.foodList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-food]");
+    if (!button) return;
+    const id = button.dataset.food;
+    openFoodId = openFoodId === id ? null : id;
     renderFoods();
   });
 
@@ -300,6 +392,16 @@
     els.importFile.value = "";
   });
   els.resetBtn.addEventListener("click", resetProgress);
+
+  if (els.dlcToggle) {
+    els.dlcToggle.checked = showDlc;
+    els.dlcToggle.addEventListener("change", () => {
+      showDlc = els.dlcToggle.checked;
+      saveShowDlc();
+      renderFoods();
+      renderIslands();
+    });
+  }
 
   const hash = (location.hash || "").replace("#", "");
   const initialTab = ["foods", "fossils", "islands"].includes(hash) ? hash : "foods";
