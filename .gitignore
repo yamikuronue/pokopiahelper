@@ -1,0 +1,14 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Local env / secrets (none expected, but keep habit)
+.env
+.env.*
+
+# Optional local serve caches
+.cache/
+node_modules/
