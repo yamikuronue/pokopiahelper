@@ -274,6 +274,17 @@
       .join("");
   }
 
+  function pokemetalMeta(status) {
+    const map = {
+      guaranteed: { label: "Yes — guaranteed", className: "has-pokemetal", badge: "Pokémetal" },
+      buried: { label: "Yes — buried", className: "has-pokemetal", badge: "Pokémetal (buried)" },
+      none: { label: "No", className: "no-pokemetal", badge: "No Pokémetal" },
+      random: { label: "Depends on the island", className: "maybe-pokemetal", badge: "Pokémetal varies" },
+      unknown: { label: "Not confirmed", className: "maybe-pokemetal", badge: "Pokémetal unknown" },
+    };
+    return map[status] || map.unknown;
+  }
+
   function renderIslands() {
     const islands = (data.dreamIslands || []).filter(includeItem);
     els.islandList.innerHTML = islands
@@ -282,6 +293,7 @@
           ? escapeHtml(island.legendary)
           : "None confirmed";
         const legendaryClass = island.legendary ? "has-legendary" : "no-legendary";
+        const metal = pokemetalMeta(island.pokemetal);
         const materials = island.materials
           .map((item) => `<li>${escapeHtml(item)}</li>`)
           .join("");
@@ -293,11 +305,17 @@
             <div>
               <h3>${escapeHtml(island.doll)}${dlcBadge}</h3>
               <p>${escapeHtml(island.island)} · ${escapeHtml(island.biome)}</p>
+              <span class="pokemetal-badge ${metal.className}">${escapeHtml(metal.badge)}</span>
             </div>
           </div>
           <div class="island-section">
             <h4>Materials</h4>
             <ul class="material-list">${materials}</ul>
+          </div>
+          <div class="island-section pokemetal-section ${metal.className}">
+            <h4>Pokémetal</h4>
+            <p class="pokemetal-name">${escapeHtml(metal.label)}</p>
+            <p class="pokemetal-note">${escapeHtml(island.pokemetalNote || "")}</p>
           </div>
           <div class="island-section legendary-section ${legendaryClass}">
             <h4>Legendary</h4>

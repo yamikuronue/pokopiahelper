@@ -640,6 +640,32 @@ body::before {
   color: var(--ink-soft);
 }
 
+.pokemetal-badge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.pokemetal-badge.has-pokemetal {
+  color: #1b4332;
+  background: rgba(82, 183, 136, 0.35);
+}
+
+.pokemetal-badge.no-pokemetal {
+  color: #6d2c2c;
+  background: rgba(230, 120, 90, 0.22);
+}
+
+.pokemetal-badge.maybe-pokemetal {
+  color: #3d5a80;
+  background: rgba(69, 123, 157, 0.18);
+}
+
 .island-section {
   padding: 0.75rem 0.95rem;
 }
@@ -665,14 +691,19 @@ body::before {
   font-size: 0.92rem;
 }
 
-.legendary-section.has-legendary {
-  background: rgba(255, 209, 102, 0.22);
+.pokemetal-section.has-pokemetal {
+  background: rgba(82, 183, 136, 0.16);
 }
 
-.legendary-section.no-legendary {
-  background: rgba(69, 123, 157, 0.08);
+.pokemetal-section.no-pokemetal {
+  background: rgba(230, 120, 90, 0.12);
 }
 
+.pokemetal-section.maybe-pokemetal {
+  background: rgba(69, 123, 157, 0.1);
+}
+
+.pokemetal-name,
 .legendary-name {
   margin: 0;
   font-family: var(--font-display);
@@ -681,11 +712,20 @@ body::before {
   color: var(--leaf-deep);
 }
 
+.pokemetal-note,
 .legendary-note {
   margin: 0.25rem 0 0;
   font-size: 0.8rem;
   line-height: 1.35;
   color: var(--ink-soft);
+}
+
+.legendary-section.has-legendary {
+  background: rgba(255, 209, 102, 0.22);
+}
+
+.legendary-section.no-legendary {
+  background: rgba(69, 123, 157, 0.08);
 }
 
 .tab-bar {

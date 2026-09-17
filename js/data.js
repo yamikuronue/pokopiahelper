@@ -468,7 +468,10 @@ window.POKOPIA_DATA = {
   /**
    * Dream Islands — doll → materials → legendary (if any).
    * Sources: Serebii focus list; Thonky / Games Wiki / Polygon for legendaries.
+   * Pokémetal: r/Pokopia reports (buried layers) plus player checks.
    * Legendaries are a chance find (often in caves), not guaranteed each visit.
+   *
+   * pokemetal: "guaranteed" | "buried" | "none" | "random" | "unknown"
    */
   dreamIslands: [
     {
@@ -477,6 +480,8 @@ window.POKOPIA_DATA = {
       island: "Wasteland Dream Island",
       biome: "Withered Wasteland",
       materials: ["Leppa Berry", "Vine Rope", "Glowing Mushrooms"],
+      pokemetal: "buried",
+      pokemetalNote: "Not a listed find, but players report a layer just above the black rock.",
       legendary: "Suicune",
       legendaryNote: "Search deep caves / ice room — chance spawn.",
     },
@@ -486,6 +491,8 @@ window.POKOPIA_DATA = {
       island: "Ocean Dream Island",
       biome: "Bleak Beach",
       materials: ["Twine", "Sea Glass Fragments", "Seashell"],
+      pokemetal: "buried",
+      pokemetalNote: "Easy to miss. Dig ~20 blocks down from the beach, just above iron / gold.",
       legendary: "Raikou",
       legendaryNote: "Cave room with metal blocks — may need story encounter first.",
     },
@@ -495,6 +502,8 @@ window.POKOPIA_DATA = {
       island: "Rock Peak Dream Island",
       biome: "Rocky Ridges (exterior)",
       materials: ["Cave Mushrooms", "Copper Ore", "Limestone"],
+      pokemetal: "none",
+      pokemetalNote: "No Pokémetal on this island.",
       legendary: null,
       legendaryNote: "No legendary confirmed — materials / cave run.",
     },
@@ -504,6 +513,8 @@ window.POKOPIA_DATA = {
       island: "Volcanic Dream Island",
       biome: "Rocky Ridges (interior)",
       materials: ["Iron Ore", "Gold Ore", "Glowing Stone"],
+      pokemetal: "none",
+      pokemetalNote: "The usual moss / metal layers are replaced with black rock, iron, gold, and glowing stone.",
       legendary: "Entei",
       legendaryNote: "Cave room surrounded by lava rocks — chance spawn.",
     },
@@ -513,6 +524,8 @@ window.POKOPIA_DATA = {
       island: "Sky Dream Island",
       biome: "Sparkling Skylands",
       materials: ["Wastepaper", "PokéMetal", "Crystal Fragment"],
+      pokemetal: "guaranteed",
+      pokemetalNote: "Listed resource. Dig 6–8 down at the beach by Drifloon’s dock — sand and moss sit over the ore.",
       legendary: "Mewtwo",
       legendaryNote: "Building-like cave room — may need story encounter first.",
     },
@@ -522,6 +535,8 @@ window.POKOPIA_DATA = {
       island: "Basin Dream Island",
       biome: "Water / basin",
       materials: ["Sea Grapes", "Small Coral", "Grubby Pearl"],
+      pokemetal: "unknown",
+      pokemetalNote: "Not confirmed. Listed finds are sea grapes, coral, and pearls — no Reddit mining reports yet.",
       legendary: "Phione",
       legendaryNote: "Underwater ruins — chance spawn.",
       dlc: true,
@@ -532,6 +547,8 @@ window.POKOPIA_DATA = {
       island: "Random Dream Island",
       biome: "Varies",
       materials: ["Random (any island’s materials)"],
+      pokemetal: "random",
+      pokemetalNote: "Follows whichever island it rolls. Skip the trip if it lands on Arcanine or Clefairy.",
       legendary: "Random",
       legendaryNote: "Rolls a random unlocked island — can include legendaries.",
     },
@@ -541,6 +558,8 @@ window.POKOPIA_DATA = {
       island: "Random Dream Island",
       biome: "Varies",
       materials: ["Random (any island’s materials)"],
+      pokemetal: "random",
+      pokemetalNote: "Same as Ditto Doll — Pokémetal only if the rolled island has it.",
       legendary: "Random",
       legendaryNote: "Same as Ditto Doll — random destination each visit.",
     },
